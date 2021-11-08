@@ -10,7 +10,7 @@ export class AppComponent implements OnInit {
   betFreqData: any = [
     { id: 1, name: '0.25', value: 2.5 },
     { id: 2, name: '0.5', value: 5 },
-    { id: 3, name: 'Normal', value: 1 },
+    { id: 3, name: 'Normal', value: 10 },
     { id: 4, name: '1.25', value: 12.5 },
     { id: 5, name: '1.5', value: 15 }
   ];
