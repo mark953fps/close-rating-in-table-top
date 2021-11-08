@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import moment from 'moment';
 
 @Component({
   selector: 'my-app',
@@ -8,76 +6,20 @@ import moment from 'moment';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  public searchForm: FormGroup;
-
-  public locationData: any[] = [
-    {
-      id: 'MB01',
-      activity: 's6d5f4sdf6545f',
-      curCode: 'HKD',
-      gamingDate: '19/08/2021',
-      shiftCode: 'D'
-    },
-    {
-      id: 'MB02',
-      activity: 'df54gdfg4d5fg',
-      curCode: 'HKD',
-      gamingDate: '20/08/2021',
-      shiftCode: 'B'
-    },
-    {
-      id: 'MB03',
-      activity: 'fd7df98g7',
-      curCode: 'HKD',
-      gamingDate: '21/08/2021',
-      shiftCode: 'C'
-    }
+  betFrequencyLabel: any;
+  betFreqData: any = [
+    { id: 1, name: '0.25', value: 2.5 },
+    { id: 2, name: '0.5', value: 5 },
+    { id: 3, name: 'Normal', value: 1 },
+    { id: 4, name: '1.25', value: 12.5 },
+    { id: 5, name: '1.5', value: 15 }
   ];
 
-  shiftData: any[] = [{ id: 1, code: 'D' }, { id: 2, code: 'B' }];
-  filteredLocation: any[];
-  location: string;
-
-  constructor(private fb: FormBuilder) {}
-
-  public ngOnInit(): void {
-    this.searchForm = this.fb.group({
-      location: ['', Validators.required],
-      gamingDate: [new Date(), Validators.required],
-      shiftType: ['', Validators.required]
-    });
+  public ngOnInit() {
+    this.clickBetFreqBox(this.betFreqData[2]);
   }
 
-  filterLocation(event) {
-    this.filteredLocation = [];
-    for (let i = 0; i < this.locationData.length; i++) {
-      let location = this.locationData[i];
-      if (location.id.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
-        this.filteredLocation.push(location);
-      }
-    }
-  }
-
-  onSelectLocation(event) {
-    let dateSplit = [];
-    dateSplit = event.gamingDate.split('/');
-
-    this.searchForm.controls.location.setValue(event.id);
-
-    setTimeout(() => {
-      this.searchForm.controls.gamingDate.setValue(new Date(`${dateSplit[1]}/${dateSplit[0]}/${dateSplit[2]}`));
-      let index = this.shiftData.findIndex(shif => shif.code === event.shiftCode);
-      index >= 0 ? this.searchForm.controls.shiftType.setValue(this.shiftData[index]) : this.searchForm.controls.shiftType.setValue(null);
-    }, 100);
-  }
-
-  onRetrieve() {
-    const params = {
-      location: this.searchForm.controls.location.value,
-      gamingDate: this.searchForm.controls.gamingDate.value,
-      shiftType: this.searchForm.controls.shiftType.value ? this.searchForm.controls.shiftType.value['code'] : null
-    };
-
-    console.log(params, 'on retrieve');
+  public clickBetFreqBox(data: any) {
+    this.betFrequencyLabel = data.name;
   }
 }

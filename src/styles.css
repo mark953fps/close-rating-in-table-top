@@ -1,5 +1,9 @@
 /* Add application styles & imports to this file! */
 
+body {
+  padding: 10px;
+}
+
 .d-flex {
   display: flex !important;
 }
